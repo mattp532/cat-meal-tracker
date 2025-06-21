@@ -7,6 +7,21 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
- 
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+  
+  backend:
+    build:
+      context: ./backend
+    container_name: backend-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+
+      
+
 volumes:
   pgdata:
